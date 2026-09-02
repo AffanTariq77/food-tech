@@ -4,11 +4,10 @@ import ThemeToggle from "@/components/foodtech/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { id: "solutions", label: "Solutions" },
-  { id: "templates", label: "Templates", highlight: true },
-  { id: "technology", label: "Technology" },
-  { id: "work", label: "Work" },
-  { id: "contact", label: "Contact" },
+  { id: "what-we-build", label: "What we build" },
+  { id: "existing-system", label: "Already have a system?" },
+  { id: "how-it-works", label: "How it works" },
+  { id: "faq", label: "FAQ" },
 ];
 
 const SiteNav = () => {
@@ -30,9 +29,9 @@ const SiteNav = () => {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300",
+        "fixed inset-x-0 top-0 z-50 border-b bg-panel transition-shadow duration-300",
         "ab-hairline",
-        scrolled ? "bg-background/85 backdrop-blur-xl" : "bg-background/40 backdrop-blur-sm",
+        scrolled && "shadow-sm",
       )}
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
@@ -43,20 +42,17 @@ const SiteNav = () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           className="flex items-center gap-3"
-          aria-label="Airbridge home"
+          aria-label="AirBridge home"
         >
           <img
             src={logo}
-            alt="Airbridge"
+            alt="AirBridge"
             width={284}
             height={86}
             className="h-6 w-auto sm:h-7 dark:brightness-0 dark:invert"
             loading="eager"
             decoding="async"
           />
-          <span className="hidden font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground lg:inline">
-            AI × Food × Infrastructure
-          </span>
         </a>
 
         <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
@@ -65,14 +61,9 @@ const SiteNav = () => {
               key={link.id}
               type="button"
               onClick={() => goTo(link.id)}
-              className={cn(
-                "relative font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-200 hover:text-foreground",
-                "after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-accent after:transition-all after:duration-300 hover:after:w-full",
-                link.highlight && "text-foreground",
-              )}
+              className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-transform duration-200 hover:scale-105 hover:text-foreground"
             >
               {link.label}
-              {link.highlight && <span className="ml-1.5 inline-block h-1 w-1 -translate-y-0.5 rounded-full bg-accent align-middle" />}
             </button>
           ))}
         </nav>
@@ -82,13 +73,13 @@ const SiteNav = () => {
           <button
             type="button"
             onClick={() => goTo("contact")}
-            className="hidden border border-accent bg-accent px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-foreground transition-all duration-300 hover:bg-transparent hover:text-accent sm:inline-flex"
+            className="hidden rounded-md bg-primary px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-primary-foreground shadow-sm transition-all duration-300 hover:bg-sky-400 hover:shadow-sky-blue sm:inline-flex"
           >
-            Start a project →
+            Send it over →
           </button>
           <button
             type="button"
-            className="border p-2 md:hidden ab-hairline"
+            className="rounded-md border p-2 md:hidden ab-hairline"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             aria-label="Toggle navigation menu"
@@ -104,7 +95,7 @@ const SiteNav = () => {
       </div>
 
       {menuOpen && (
-        <div id="mobile-nav" className="border-t ab-hairline bg-background/95 px-5 py-4 backdrop-blur-xl md:hidden">
+        <div id="mobile-nav" className="border-t ab-hairline bg-panel px-5 py-4 shadow-sm md:hidden">
           <nav aria-label="Mobile" className="flex flex-col">
             {links.map((link) => (
               <button
@@ -122,9 +113,9 @@ const SiteNav = () => {
             <button
               type="button"
               onClick={() => goTo("contact")}
-              className="flex-1 border border-accent bg-accent px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-foreground"
+              className="flex-1 rounded-md bg-primary px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-primary-foreground shadow-sm transition-all duration-300 hover:bg-sky-400 hover:shadow-sky-blue"
             >
-              Start a project →
+              Send it over →
             </button>
           </div>
         </div>

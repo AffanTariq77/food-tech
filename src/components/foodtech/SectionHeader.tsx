@@ -6,11 +6,12 @@ interface SectionHeaderProps {
   title: string;
   description?: string;
   className?: string;
+  centered?: boolean;
 }
 
-const SectionHeader = ({ eyebrow, title, description, className }: SectionHeaderProps) => (
-  <Reveal className={cn("max-w-3xl", className)}>
-    <p className="ab-label flex items-center gap-3">
+const SectionHeader = ({ eyebrow, title, description, className, centered = false }: SectionHeaderProps) => (
+  <Reveal className={cn("max-w-3xl", centered && "mx-auto text-center", className)}>
+    <p className={cn("ab-label flex items-center gap-3", centered && "justify-center")}>
       <span className="inline-block h-px w-8 bg-accent" aria-hidden="true" />
       {eyebrow}
     </p>

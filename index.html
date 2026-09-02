@@ -11,16 +11,16 @@
     <!-- Image Preloads with Priority Hints -->
     <link rel="preload" href="/src/assets/logo.svg" as="image" fetchpriority="high" />
 
-    <!-- Apply the stored theme before paint (dark by default) -->
+    <!-- Apply the stored theme before paint (light by default) -->
     <script>
       (function () {
         try {
           var stored = localStorage.getItem('airbridge-theme');
-          var theme = stored === 'light' ? 'light' : 'dark';
+          var theme = stored === 'dark' ? 'dark' : 'light';
           document.documentElement.classList.toggle('dark', theme === 'dark');
           document.documentElement.style.colorScheme = theme;
         } catch (e) {
-          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('dark');
         }
       })();
     </script>
@@ -37,14 +37,14 @@
     
     <!-- Prefetch DNS for external services -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <title>Airbridge — Food Technology & AI Infrastructure</title>
+    <title>AirBridge — Technology for the Modern Food Industry</title>
     
     <!-- Meta for SEO and sharing -->
-    <meta name="description" content="Airbridge builds digital infrastructure for restaurants and food businesses — websites, POS integrations, AI systems and LLM cost optimization.">
-    <meta name="theme-color" content="#070707" />
+    <meta name="description" content="AirBridge builds the technology restaurants and food businesses run on: ready-to-launch websites and ordering, till and payment systems that finally talk to each other, AI that answers the phone at your busiest hour, and reporting that adds up across every location.">
+    <meta name="theme-color" content="#f8f6f0" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Airbridge — Food Technology & AI Infrastructure" />
-    <meta property="og:description" content="Airbridge builds digital infrastructure for restaurants and food businesses — websites, POS integrations, AI systems and LLM cost optimization." />
+    <meta property="og:title" content="AirBridge — Technology for the Modern Food Industry" />
+    <meta property="og:description" content="AirBridge builds the technology restaurants and food businesses run on: ready-to-launch websites and ordering, till and payment systems that finally talk to each other, AI that answers the phone at your busiest hour, and reporting that adds up across every location." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   </head>

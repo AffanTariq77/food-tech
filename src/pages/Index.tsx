@@ -1,17 +1,19 @@
 import { lazy } from "react";
-import ArchitectureSection from "@/components/foodtech/ArchitectureSection";
 import HeroSection from "@/components/foodtech/HeroSection";
 import SectionBoundary from "@/components/foodtech/SectionBoundary";
 import SiteNav from "@/components/foodtech/SiteNav";
-import SolutionsSection from "@/components/foodtech/SolutionsSection";
 import TechMarquee from "@/components/foodtech/TechMarquee";
+import WhatWeDoSection from "@/components/foodtech/WhatWeDoSection";
 
 // Below-the-fold sections are split out of the initial bundle
-const TemplatesSection = lazy(() => import("@/components/foodtech/TemplatesSection"));
-const PackagesSection = lazy(() => import("@/components/foodtech/PackagesSection"));
-const FinOpsSection = lazy(() => import("@/components/foodtech/FinOpsSection"));
-const UseCasesSection = lazy(() => import("@/components/foodtech/UseCasesSection"));
+const MathSection = lazy(() => import("@/components/foodtech/MathSection"));
+const FourGapsSection = lazy(() => import("@/components/foodtech/FourGapsSection"));
+const WhatWeBuildSection = lazy(() => import("@/components/foodtech/WhatWeBuildSection"));
+const ExistingSystemSection = lazy(() => import("@/components/foodtech/ExistingSystemSection"));
+const AIUsefulSection = lazy(() => import("@/components/foodtech/AIUsefulSection"));
+const MarketKnowledgeSection = lazy(() => import("@/components/foodtech/MarketKnowledgeSection"));
 const ProcessSection = lazy(() => import("@/components/foodtech/ProcessSection"));
+const FAQSection = lazy(() => import("@/components/foodtech/FAQSection"));
 const ContactSection = lazy(() => import("@/components/foodtech/ContactSection"));
 const SiteFooter = lazy(() => import("@/components/foodtech/SiteFooter"));
 
@@ -23,28 +25,38 @@ const Index = () => (
     <main>
       <HeroSection />
       <TechMarquee />
-      <SolutionsSection />
+      <WhatWeDoSection />
 
       <SectionBoundary fallback={<SectionFallback />}>
-        <TemplatesSection />
+        <MathSection />
       </SectionBoundary>
 
       <SectionBoundary fallback={<SectionFallback />}>
-        <PackagesSection />
+        <FourGapsSection />
       </SectionBoundary>
 
       <SectionBoundary fallback={<SectionFallback />}>
-        <FinOpsSection />
+        <WhatWeBuildSection />
       </SectionBoundary>
 
-      <ArchitectureSection />
+      <SectionBoundary fallback={<SectionFallback />}>
+        <ExistingSystemSection />
+      </SectionBoundary>
 
       <SectionBoundary fallback={<SectionFallback />}>
-        <UseCasesSection />
+        <AIUsefulSection />
+      </SectionBoundary>
+
+      <SectionBoundary fallback={<SectionFallback />}>
+        <MarketKnowledgeSection />
       </SectionBoundary>
 
       <SectionBoundary fallback={<SectionFallback />}>
         <ProcessSection />
+      </SectionBoundary>
+
+      <SectionBoundary fallback={<SectionFallback />}>
+        <FAQSection />
       </SectionBoundary>
 
       <SectionBoundary fallback={<SectionFallback />}>

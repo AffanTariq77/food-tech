@@ -68,6 +68,41 @@ module.exports = {
           from: { opacity: "0", transform: "translateY(12px)" },
           to: { opacity: "1", transform: "none" },
         },
+        "phone-scene-a": {
+          "0%, 27%": { opacity: "1", transform: "none" },
+          "33%, 97%": { opacity: "0", transform: "translateY(-6px)" },
+          "100%": { opacity: "1", transform: "none" },
+        },
+        "phone-scene-b": {
+          "0%, 30%, 66%, 100%": { opacity: "0", transform: "translateY(6px)" },
+          "36%, 60%": { opacity: "1", transform: "none" },
+        },
+        "phone-scene-c": {
+          "0%, 63%, 100%": { opacity: "0", transform: "translateY(6px)" },
+          "69%, 93%": { opacity: "1", transform: "none" },
+        },
+        "card-scene-a": {
+          "0%, 45%": { opacity: "1", transform: "none" },
+          "50%, 100%": { opacity: "0", transform: "translateY(-6px)" },
+        },
+        "card-scene-b": {
+          "0%, 45%, 100%": { opacity: "0", transform: "translateY(6px)" },
+          "50%, 95%": { opacity: "1", transform: "none" },
+        },
+        "tablet-check": {
+          "0%": { opacity: "0", transform: "translateX(-8px)" },
+          "6%, 85%": { opacity: "1", transform: "none" },
+          "95%, 100%": { opacity: "0", transform: "translateX(-8px)" },
+        },
+        "bar-grow": {
+          "0%, 100%": { transform: "scaleX(0)" },
+          "20%, 90%": { transform: "scaleX(1)" },
+        },
+        "count-hold": {
+          "0%, 8%": { opacity: "0", transform: "translateY(4px)" },
+          "16%, 92%": { opacity: "1", transform: "none" },
+          "100%": { opacity: "0", transform: "translateY(4px)" },
+        },
       },
       animation: {
         marquee: "marquee 32s linear infinite",
@@ -75,8 +110,16 @@ module.exports = {
         "pulse-node": "pulse-node 2.6s ease-in-out infinite",
         "caret-blink": "caret-blink 1s step-end infinite",
         "fade-up": "fade-up 600ms cubic-bezier(0.22, 1, 0.36, 1) both",
+        "phone-scene-a": "phone-scene-a 9s ease-in-out infinite",
+        "phone-scene-b": "phone-scene-b 9s ease-in-out infinite",
+        "phone-scene-c": "phone-scene-c 9s ease-in-out infinite",
+        "card-scene-a": "card-scene-a 7s ease-in-out infinite",
+        "card-scene-b": "card-scene-b 7s ease-in-out infinite",
+        "tablet-check": "tablet-check 6s ease-in-out infinite",
+        "bar-grow": "bar-grow 8s ease-in-out infinite",
+        "count-hold": "count-hold 8s ease-in-out infinite",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };

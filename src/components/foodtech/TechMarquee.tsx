@@ -1,11 +1,6 @@
 const items = [
-  "POS Integration",
-  "Restaurant AI",
-  "Online Ordering",
-  "Inventory",
-  "LLM Optimization",
-  "Restaurant Analytics",
-  "Automation",
+  "Toast", "Square", "Clover", "SpotOn", "Lightspeed", "TouchBistro", "Revel", "Oracle MICROS",
+  "DoorDash", "Uber Eats", "Grubhub",
 ];
 
 const TechMarquee = () => (

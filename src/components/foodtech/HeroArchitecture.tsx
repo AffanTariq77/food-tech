@@ -64,11 +64,13 @@ const Link = ({ d, delay = 0 }: { d: string; delay?: number }) => (
   />
 );
 
+/** Mirrors the hero copy: ordering, till & payments and the AI phone all flow through
+    AirBridge into one report per location — not a generic tech-stack diagram. */
 const HeroArchitecture = () => (
   <svg
-    viewBox="0 0 560 620"
+    viewBox="0 0 560 420"
     role="img"
-    aria-label="Airbridge architecture: restaurant POS feeds orders, menu and inventory into the Airbridge integration layer, which powers data and AI, producing business intelligence."
+    aria-label="AirBridge system flow: your restaurant's ordering, till and phone all feed into the AirBridge integration layer, producing one report across every location."
     className="h-auto w-full max-w-[560px] text-foreground"
   >
     <defs>
@@ -78,18 +80,18 @@ const HeroArchitecture = () => (
       </linearGradient>
     </defs>
 
-    <rect x="0" y="0" width="560" height="620" fill="url(#ab-hero-fade)" />
+    <rect x="0" y="0" width="560" height="420" fill="url(#ab-hero-fade)" />
 
     <text x="20" y="24" className="fill-current opacity-40" style={{ fontSize: 9, letterSpacing: "0.28em", fontFamily: "ui-monospace, monospace" }}>
       SYSTEM / DATA FLOW
     </text>
 
-    <Box x={150} y={40} w={260} h={52} label="RESTAURANT POS" meta="TERMINALS · BRANCHES" />
+    <Box x={150} y={40} w={260} h={52} label="YOUR RESTAURANT" meta="WEBSITE · TILL · PHONE" />
     <Link d="M280 92 V126" />
 
-    <Box x={150} y={126} w={80} h={44} label="ORDERS" />
-    <Box x={240} y={126} w={80} h={44} label="MENU" />
-    <Box x={330} y={126} w={80} h={44} label="STOCK" />
+    <Box x={150} y={126} w={80} h={44} label="ORDER" />
+    <Box x={240} y={126} w={80} h={44} label="TILL" />
+    <Box x={330} y={126} w={80} h={44} label="PHONE" />
 
     <Link d="M190 170 V196 H280 V214" delay={120} />
     <Link d="M280 170 V214" delay={240} />
@@ -97,29 +99,13 @@ const HeroArchitecture = () => (
 
     <Box x={110} y={214} w={340} h={66} label="AIRBRIDGE" meta="INTEGRATION LAYER" accent />
 
-    <Link d="M280 280 V310 H170 V336" delay={80} />
-    <Link d="M280 280 V310 H390 V336" delay={200} />
+    <Link d="M280 280 V310" delay={80} />
 
-    <Box x={90} y={336} w={160} h={52} label="DATA" meta="EVENTS · WAREHOUSE" />
-    <Box x={310} y={336} w={160} h={52} label="AI" meta="LLM · AGENTS" />
-
-    <Link d="M170 388 V420" delay={140} />
-    <Link d="M390 388 V420" delay={260} />
-
-    <Box x={90} y={420} w={160} h={44} label="ANALYTICS" />
-    <Box x={310} y={420} w={160} h={44} label="ASSISTANTS" />
-
-    <Link d="M170 464 V500 H280 V526" delay={60} />
-    <Link d="M390 464 V500 H280 V526" delay={180} />
-
-    <Box x={150} y={526} w={260} h={56} label="BUSINESS INTELLIGENCE" meta="DECISIONS · AUTOMATION" />
+    <Box x={150} y={310} w={260} h={56} label="REPORTING" meta="EVERY LOCATION · ONE PLACE" />
 
     {[
       [280, 109],
-      [280, 297],
-      [170, 404],
-      [390, 404],
-      [280, 512],
+      [280, 295],
     ].map(([cx, cy]) => (
       <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={3} className="fill-accent animate-pulse-node" style={{ transformOrigin: `${cx}px ${cy}px` }} />
     ))}

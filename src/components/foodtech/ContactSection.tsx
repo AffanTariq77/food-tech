@@ -1,22 +1,22 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import Reveal from "@/components/foodtech/Reveal";
-import { scrollToSection } from "@/lib/scroll";
 import { submitForm } from "@/lib/supabaseClient";
 
-const businessTypes = ["Restaurant", "Restaurant chain", "Cloud kitchen", "Café", "Food startup", "Food platform", "Other"];
-const interests = ["Launch — template", "Custom — we build it", "AI — add intelligence", "LLM cost optimization"];
+const locationOptions = ["1", "2 to 4", "5 to 9", "10 to 24", "25+"];
+const tillOptions = ["Toast", "Square", "Clover", "SpotOn", "Lightspeed", "TouchBistro", "Revel", "Oracle MICROS", "Something else", "Not sure"];
 
 const fieldClass =
-  "mt-2.5 h-11 w-full border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent ab-hairline";
+  "mt-2.5 h-11 w-full rounded-md border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent ab-hairline";
 
 const ContactSection = () => {
   const [form, setForm] = useState({
+    restaurantName: "",
+    website: "",
     name: "",
     email: "",
-    company: "",
-    businessType: businessTypes[0],
-    interest: interests[0],
-    details: "",
+    locations: locationOptions[0],
+    tillSystem: tillOptions[0],
+    annoying: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -29,23 +29,23 @@ const ContactSection = () => {
     event.preventDefault();
     setError(null);
 
-    if (!form.name || !form.email || !form.details) {
-      setError("Please add your name, work email and a short brief.");
+    if (!form.restaurantName || !form.website || !form.name || !form.email) {
+      setError("Please add your restaurant name, website or social page, your name and email.");
       return;
     }
 
     setStatus("loading");
     try {
       await submitForm({
-        platform: "Airbridge-FoodTech",
+        platform: "AirBridge-FoodTech",
         full_name: form.name,
         work_email: form.email,
-        company_name: form.company,
-        project_details: form.details,
-        metadata: { business_type: form.businessType, interest: form.interest },
+        company_name: form.restaurantName,
+        project_details: form.annoying,
+        metadata: { website: form.website, locations: form.locations, till_system: form.tillSystem },
       });
       setStatus("success");
-      setForm({ name: "", email: "", company: "", businessType: businessTypes[0], interest: interests[0], details: "" });
+      setForm({ restaurantName: "", website: "", name: "", email: "", locations: locationOptions[0], tillSystem: tillOptions[0], annoying: "" });
     } catch (submissionError) {
       setStatus("idle");
       setError(submissionError instanceof Error ? submissionError.message : "Something went wrong. Please try again.");
@@ -61,93 +61,81 @@ const ContactSection = () => {
         <Reveal>
           <p className="ab-label flex items-center gap-3">
             <span className="inline-block h-px w-8 bg-accent" aria-hidden="true" />
-            Start a project
+            The ask
           </p>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl lg:text-6xl">
-            Your food business.
+            Tell us what you are running.
             <br />
-            Your technology.
+            We will tell you what is missing.
           </h2>
           <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Start with a template, work with our team, or build an intelligent food-tech system around your business.
+            Send us your website and roughly what you use, whatever you can remember off the top of your head.
+            Somebody who knows this industry will come back to you with where the gaps are and what we would
+            build first. Plain English, no slide deck, no obligation.
           </p>
-
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#contact-form"
-              className="group border border-accent bg-accent px-6 py-3.5 text-center font-mono text-xs uppercase tracking-[0.18em] text-accent-foreground transition-all duration-300 hover:bg-transparent hover:text-accent"
-            >
-              Start a conversation <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </a>
-            <button
-              type="button"
-              onClick={() => scrollToSection("templates")}
-              className="border px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 hover:border-accent/60 hover:text-foreground ab-hairline"
-            >
-              Explore templates →
-            </button>
-          </div>
-
-          <dl className="mt-14 grid max-w-lg grid-cols-2 gap-px border ab-hairline bg-[hsl(var(--hairline)/0.1)]">
-            {[
-              { term: "Response time", value: "< 24 hours" },
-              { term: "Engagements", value: "Launch · Custom · AI" },
-            ].map((item) => (
-              <div key={item.term} className="bg-panel p-5">
-                <dt className="ab-label">{item.term}</dt>
-                <dd className="mt-2 font-mono text-sm">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
         </Reveal>
 
         <Reveal delay={90}>
-          <form id="contact-form" onSubmit={handleSubmit} className="ab-panel p-6 sm:p-8" noValidate>
-            <p className="ab-label">Project inquiry</p>
+          <form onSubmit={handleSubmit} className="ab-panel p-6 sm:p-8" noValidate>
+            <p className="ab-label">Send it over</p>
 
-            <div className="mt-6 grid gap-5 sm:grid-cols-2">
-              <div>
-                <label htmlFor="name" className="ab-label">
-                  Full name *
-                </label>
-                <input id="name" value={form.name} onChange={handleChange} placeholder="Jamie Chen" className={fieldClass} required />
-              </div>
-              <div>
-                <label htmlFor="email" className="ab-label">
-                  Work email *
-                </label>
-                <input id="email" type="email" value={form.email} onChange={handleChange} placeholder="jamie@restaurant.com" className={fieldClass} required />
-              </div>
+            <div className="mt-6">
+              <label htmlFor="restaurantName" className="ab-label">
+                Restaurant name *
+              </label>
+              <input id="restaurantName" value={form.restaurantName} onChange={handleChange} className={fieldClass} required />
             </div>
 
             <div className="mt-5">
-              <label htmlFor="company" className="ab-label">
-                Company
+              <label htmlFor="website" className="ab-label">
+                Website or social page *
               </label>
-              <input id="company" value={form.company} onChange={handleChange} placeholder="Maison Group" className={fieldClass} />
+              <input
+                id="website"
+                value={form.website}
+                onChange={handleChange}
+                placeholder="yourrestaurant.com, or your Facebook or Instagram page"
+                className={fieldClass}
+                required
+              />
             </div>
 
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
               <div>
-                <label htmlFor="businessType" className="ab-label">
-                  Business type
+                <label htmlFor="name" className="ab-label">
+                  Your name *
                 </label>
-                <select id="businessType" value={form.businessType} onChange={handleChange} className={fieldClass}>
-                  {businessTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
+                <input id="name" value={form.name} onChange={handleChange} className={fieldClass} required />
+              </div>
+              <div>
+                <label htmlFor="email" className="ab-label">
+                  Email *
+                </label>
+                <input id="email" type="email" value={form.email} onChange={handleChange} className={fieldClass} required />
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label htmlFor="locations" className="ab-label">
+                  How many locations *
+                </label>
+                <select id="locations" value={form.locations} onChange={handleChange} className={fieldClass} required>
+                  {locationOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
                     </option>
                   ))}
                 </select>
               </div>
               <div>
-                <label htmlFor="interest" className="ab-label">
-                  Interested in
+                <label htmlFor="tillSystem" className="ab-label">
+                  What till system are you on *
                 </label>
-                <select id="interest" value={form.interest} onChange={handleChange} className={fieldClass}>
-                  {interests.map((interest) => (
-                    <option key={interest} value={interest}>
-                      {interest}
+                <select id="tillSystem" value={form.tillSystem} onChange={handleChange} className={fieldClass} required>
+                  {tillOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
                     </option>
                   ))}
                 </select>
@@ -155,17 +143,16 @@ const ContactSection = () => {
             </div>
 
             <div className="mt-5">
-              <label htmlFor="details" className="ab-label">
-                Project brief *
+              <label htmlFor="annoying" className="ab-label">
+                What is the most annoying part right now
               </label>
               <textarea
-                id="details"
-                value={form.details}
+                id="annoying"
+                value={form.annoying}
                 onChange={handleChange}
-                rows={5}
-                placeholder="What are you building, which systems do you run today, and what would success look like?"
+                rows={4}
+                placeholder="Four delivery apps and I still cannot tell what we actually make"
                 className={`${fieldClass} h-auto py-3`}
-                required
               />
             </div>
 
@@ -176,17 +163,20 @@ const ContactSection = () => {
             )}
             {status === "success" && (
               <p role="status" className="mt-4 border border-accent/60 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
-                Received — we'll be in touch within 24 hours.
+                Received — one reply from a person, same working day.
               </p>
             )}
 
             <button
               type="submit"
               disabled={status === "loading"}
-              className="mt-6 w-full border border-accent bg-accent px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-accent-foreground transition-all duration-300 hover:bg-transparent hover:text-accent disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-6 w-full rounded-md bg-primary px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-primary-foreground shadow-sm transition-all duration-300 hover:bg-sky-400 hover:shadow-sky-blue disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {status === "loading" ? "Sending…" : "Send inquiry →"}
+              {status === "loading" ? "Sending…" : "Send it over →"}
             </button>
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              One reply from a person, same working day. No sales sequence you cannot get out of.
+            </p>
           </form>
         </Reveal>
       </div>

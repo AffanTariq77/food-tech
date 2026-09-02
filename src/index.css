@@ -2,14 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Airbridge design system — dark-first food-tech infrastructure.
-   All colors MUST be HSL. */
+/* AirBridge design system — matches the live house palette used by
+   LLM-caost-optimization (and the wider portfolio): warm cream background,
+   navy ink, sky-blue accent. All colors MUST be HSL. */
 
 @layer base {
   :root {
     color-scheme: light;
 
-    /* Light theme — intentionally designed warm off-white, not an inversion */
     --background: 40 24% 97%;
     --foreground: 216 42% 12%;
 
@@ -44,8 +44,8 @@
 
     --grid-line: 216 30% 12%;
     --grid-opacity: 0.05;
-    --hairline: 0 0% 0%;
-    --hairline-opacity: 0.1;
+    --hairline: 216 30% 20%;
+    --hairline-opacity: 0.12;
 
     --radius: 0.375rem;
   }
@@ -136,8 +136,13 @@
   }
 
   .ab-panel {
-    @apply border bg-panel;
+    @apply rounded-lg border bg-panel shadow-sm;
     border-color: hsl(var(--hairline) / var(--hairline-opacity));
+  }
+
+  /* Interactive card variant — showcase grids and preview cards only */
+  .ab-panel-hover {
+    @apply ab-panel transition-shadow duration-300 hover:shadow-sky-blue;
   }
 
   .ab-reveal {
