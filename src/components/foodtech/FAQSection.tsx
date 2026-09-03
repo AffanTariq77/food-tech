@@ -50,14 +50,14 @@ const FAQSection = () => (
     <div className="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:py-28">
       <SectionHeader eyebrow="The questions we get asked" title="Questions we get asked." centered />
 
-      <Reveal className="mx-auto mt-10 max-w-3xl">
-        <Accordion type="single" collapsible>
+      <Reveal className="mx-auto mt-10 max-w-5xl">
+        <Accordion type="single" collapsible className="columns-1 gap-10 lg:columns-2">
           {faqs.map((faq) => (
-            <AccordionItem key={faq.question} value={faq.question} className="ab-hairline">
-              <AccordionTrigger className="text-left text-base font-semibold hover:no-underline">
+            <AccordionItem key={faq.question} value={faq.question} className="break-inside-avoid ab-hairline">
+              <AccordionTrigger className="text-left text-lg font-semibold hover:no-underline">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
+              <AccordionContent className="text-base leading-relaxed text-muted-foreground">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

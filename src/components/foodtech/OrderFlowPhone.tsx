@@ -16,7 +16,7 @@ const steps = ["Placed", "Preparing", "On its way"];
 /** Looping menu → order → delivery story. Pure CSS crossfade, no JS state. */
 const OrderFlowPhone = () => (
   <div className="mx-auto w-full max-w-[240px]">
-    <div className="rounded-[2.5rem] border-[10px] border-primary bg-primary p-1 shadow-panel">
+    <div className="rounded-[2.5rem] border-[5px] border-primary bg-primary p-1 shadow-panel">
       <div className="relative aspect-[9/18.5] overflow-hidden rounded-[1.7rem] bg-panel">
         <span className="absolute left-1/2 top-2 h-1.5 w-16 -translate-x-1/2 rounded-full bg-primary/70" aria-hidden="true" />
 

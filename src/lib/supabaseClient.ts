@@ -54,3 +54,39 @@ export async function submitForm(data: FormSubmission) {
     throw error;
   }
 }
+
+interface NotifyPayload {
+  kind?: 'notifyBusiness' | 'ackVisitor';
+  subject: string;
+  to?: string;
+  replyTo?: string;
+  fields: Record<string, string | undefined>;
+}
+
+// Fire-and-forget email via the send-notification edge function. The
+// Supabase row saved by submitForm() is always the source of truth, so a
+// failure here (e.g. RESEND_API_KEY not yet configured) is swallowed —
+// callers should not block success on it.
+export async function sendNotification(payload: NotifyPayload) {
+  try {
+    const { error } = await getSupabase().functions.invoke('send-notification', { body: payload });
+    if (error) console.error('send-notification error:', error);
+  } catch (error) {
+    console.error('send-notification error:', error);
+  }
+}
+
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+// Throws if the assistant isn't configured yet (e.g. ANTHROPIC_API_KEY missing) —
+// callers should catch this and fall back to human handoff.
+export async function askChatAssistant(messages: ChatMessage[]): Promise<string> {
+  const { data, error } = await getSupabase().functions.invoke('chat-assistant', { body: { messages } });
+  if (error || !data?.reply) {
+    throw new Error(error?.message || 'Chat assistant is not available right now.');
+  }
+  return data.reply as string;
+}

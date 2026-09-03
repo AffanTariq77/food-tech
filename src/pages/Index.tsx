@@ -16,6 +16,8 @@ const ProcessSection = lazy(() => import("@/components/foodtech/ProcessSection")
 const FAQSection = lazy(() => import("@/components/foodtech/FAQSection"));
 const ContactSection = lazy(() => import("@/components/foodtech/ContactSection"));
 const SiteFooter = lazy(() => import("@/components/foodtech/SiteFooter"));
+const ChatWidget = lazy(() => import("@/components/foodtech/ChatWidget"));
+const NewsletterPopup = lazy(() => import("@/components/foodtech/NewsletterPopup"));
 
 const SectionFallback = () => <div className="h-64 border-b ab-hairline bg-panel/40" aria-hidden="true" />;
 
@@ -66,6 +68,13 @@ const Index = () => (
 
     <SectionBoundary fallback={<SectionFallback />}>
       <SiteFooter />
+    </SectionBoundary>
+
+    <SectionBoundary fallback={null}>
+      <ChatWidget />
+    </SectionBoundary>
+    <SectionBoundary fallback={null}>
+      <NewsletterPopup />
     </SectionBoundary>
   </div>
 );

@@ -68,23 +68,24 @@ const MarketKnowledgeSection = () => (
       <Reveal delay={280} className="ab-panel mt-14 overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>The eleven groups</TableHead>
-              <TableHead>What it does in your restaurant</TableHead>
-              <TableHead>Names you would know</TableHead>
+            <TableRow className="ab-hairline bg-muted/60 hover:bg-muted/60">
+              <TableHead className="ab-label min-w-[180px] border-r py-4 font-bold text-foreground ab-hairline">The eleven groups</TableHead>
+              <TableHead className="ab-label min-w-[220px] border-r py-4 font-bold text-foreground ab-hairline">What it does in your restaurant</TableHead>
+              <TableHead className="ab-label min-w-[260px] py-4 font-bold text-foreground">Names you would know</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {groups.map((group) => (
-              <TableRow key={group.name}>
-                <TableCell className="font-medium text-foreground">{group.name}</TableCell>
-                <TableCell className="text-muted-foreground">{group.does}</TableCell>
-                <TableCell className="text-muted-foreground">{group.names}</TableCell>
+            {groups.map((group, i) => (
+              <TableRow key={group.name} className={`ab-hairline ${i % 2 === 1 ? "bg-muted/30" : ""}`}>
+                <TableCell className="align-top border-r font-semibold text-foreground ab-hairline">{group.name}</TableCell>
+                <TableCell className="align-top border-r text-muted-foreground ab-hairline">{group.does}</TableCell>
+                <TableCell className="align-top text-muted-foreground">{group.names}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </Reveal>
+      <p className="mt-2 text-xs text-muted-foreground lg:hidden">Scroll sideways to see every column →</p>
 
       <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
         Most restaurants are running six to nine of these right now, bought at different times from different

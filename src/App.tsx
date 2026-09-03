@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 import { ThemeProvider } from "./hooks/use-theme";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Privacy from "./pages/Privacy";
 
 // Lazy load admin pages
 const AdminPanel = lazy(() => import("./pages/AdminPanel"));
@@ -20,6 +21,7 @@ const App = () => (
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route 
             path="/admin/login" 
             element={

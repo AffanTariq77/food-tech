@@ -32,9 +32,9 @@ const ProcessSection = () => (
       <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {stages.map((stage, i) => (
           <Reveal key={stage.index} delay={i * 90} as="li" className="ab-panel-hover p-7">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">{stage.index}</span>
-            <h3 className="mt-6 text-lg font-semibold tracking-[-0.01em]">{stage.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{stage.description}</p>
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-accent">{stage.index}</span>
+            <h3 className="mt-6 text-xl font-semibold tracking-[-0.01em]">{stage.title}</h3>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">{stage.description}</p>
           </Reveal>
         ))}
       </ol>

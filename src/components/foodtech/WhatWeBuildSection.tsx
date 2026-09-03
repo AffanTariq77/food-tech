@@ -45,7 +45,7 @@ const items = [
 const WhatWeBuildSection = () => (
   <section id="what-we-build" className="border-b ab-hairline">
     <div className="mx-auto max-w-[1400px] px-5 py-20 sm:px-8 lg:py-28">
-      <div className="grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-center lg:gap-16">
+      <div className="grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-start lg:gap-16">
         <SectionHeader
           eyebrow="What we build"
           title="We build the part you do not have."
@@ -58,10 +58,15 @@ const WhatWeBuildSection = () => (
 
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {items.map((item, i) => (
-          <Reveal key={item.index} delay={i * 70} as="article" className="ab-panel-hover p-7 lg:p-9">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">{item.index}</span>
-            <h3 className="mt-6 text-lg font-semibold tracking-[-0.01em]">{item.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+          <Reveal
+            key={item.index}
+            delay={i * 70}
+            as="article"
+            className={`ab-panel-hover p-7 lg:p-9 ${i === items.length - 1 ? "md:col-span-2 lg:col-span-3" : ""}`}
+          >
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-accent">{item.index}</span>
+            <h3 className="mt-6 text-xl font-semibold tracking-[-0.01em]">{item.title}</h3>
+            <p className={`mt-3 text-base leading-relaxed text-muted-foreground ${i === items.length - 1 ? "max-w-2xl" : ""}`}>{item.description}</p>
           </Reveal>
         ))}
       </div>

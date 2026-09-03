@@ -1,5 +1,4 @@
 import logo from "@/assets/airbridge-logo.png";
-import ThemeToggle from "@/components/foodtech/ThemeToggle";
 import { scrollToSection } from "@/lib/scroll";
 
 const columns = [
@@ -25,6 +24,22 @@ const columns = [
 
 const SiteFooter = () => (
   <footer className="bg-background">
+    <div className="border-b bg-accent/10 ab-hairline">
+      <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-3 px-5 py-8 text-center sm:flex-row sm:justify-center sm:gap-6 sm:px-8">
+        <div>
+          <h2 className="text-xl font-semibold tracking-[-0.02em] sm:text-2xl">Still deciding? Send it over anyway.</h2>
+          <p className="mt-1 text-sm text-muted-foreground">We reply the same working day, and there is no obligation.</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => scrollToSection("contact")}
+          className="shrink-0 rounded-md bg-primary px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-primary-foreground shadow-sm transition-all duration-300 hover:bg-sky-400 hover:shadow-sky-blue"
+        >
+          Request a quote →
+        </button>
+      </div>
+    </div>
+
     <div className="mx-auto max-w-[1400px] px-5 py-16 sm:px-8">
       <div className="grid gap-12 lg:grid-cols-[1.2fr_2fr]">
         <div>
@@ -32,7 +47,6 @@ const SiteFooter = () => (
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
             AirBridge Devs. We build ordering, apps and the systems behind them for restaurants.
           </p>
-          <ThemeToggle className="mt-7" />
         </div>
 
         <div className="grid gap-10 sm:grid-cols-2">

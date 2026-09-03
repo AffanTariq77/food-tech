@@ -40,10 +40,10 @@ const FourGapsSection = () => (
       <div className="mt-14 grid gap-5 sm:grid-cols-2">
         {gaps.map((gap, i) => (
           <Reveal key={gap.code} delay={i * 90} as="article" className="ab-panel-hover p-7 lg:p-9">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">{gap.code}</span>
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-accent">{gap.code}</span>
             <h3 className="mt-6 text-xl font-semibold leading-snug tracking-[-0.01em] sm:text-2xl">{gap.title}</h3>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{gap.body}</p>
-            <p className="mt-4 border-t pt-4 text-sm font-medium text-foreground ab-hairline">{gap.line}</p>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">{gap.body}</p>
+            <p className="mt-4 border-t pt-4 text-base font-medium text-foreground ab-hairline">{gap.line}</p>
           </Reveal>
         ))}
       </div>

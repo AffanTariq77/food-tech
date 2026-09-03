@@ -29,7 +29,7 @@ const AIUsefulSection = () => (
         description="Every company selling to you added the letters AI to their homepage in the last two years. Most of it is a report with a new name on it. Here is where we have seen it do real work, and where we tell owners not to bother."
       />
 
-      <div className="mt-14 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+      <div className="mt-14 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch lg:gap-14">
         <div>
           <p className="ab-label">Worth it</p>
           <div className="mt-6 space-y-8">
@@ -42,9 +42,9 @@ const AIUsefulSection = () => (
           </div>
         </div>
 
-        <Reveal delay={120} className="ab-panel h-fit p-7 lg:p-9">
-          <p className="ab-label">Not worth it, and we will say so</p>
-          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+        <Reveal delay={120} className="ab-panel flex flex-col justify-center p-8 lg:p-10">
+          <p className="ab-label text-sm">Not worth it, and we will say so</p>
+          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
             It does not run your kitchen. It does not set your prices. It does not touch payments outside rules
             you set. It does not replace anybody. And it does not replace the person who knows every regular by
             name. That person is your business, and anything that gets between them and your customers is a step
