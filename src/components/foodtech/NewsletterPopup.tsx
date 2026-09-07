@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { submitForm } from "@/lib/supabaseClient";
 
-const DISMISSED_KEY = "airbridge-newsletter-dismissed";
-
 const NewsletterPopup = () => {
   const [visible, setVisible] = useState(false);
   const [form, setForm] = useState({ name: "", email: "" });
@@ -12,8 +10,6 @@ const NewsletterPopup = () => {
   const hasScrolled = useRef(false);
 
   useEffect(() => {
-    if (localStorage.getItem(DISMISSED_KEY)) return;
-
     const maybeShow = () => {
       if (timerElapsed.current && hasScrolled.current) setVisible(true);
     };
@@ -40,7 +36,6 @@ const NewsletterPopup = () => {
 
   const dismiss = () => {
     setVisible(false);
-    localStorage.setItem(DISMISSED_KEY, "1");
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +53,6 @@ const NewsletterPopup = () => {
     try {
       await submitForm({ platform: "AirBridge-Newsletter", full_name: form.name, work_email: form.email });
       setStatus("success");
-      localStorage.setItem(DISMISSED_KEY, "1");
     } catch (submissionError) {
       setStatus("idle");
       setError(submissionError instanceof Error ? submissionError.message : "Something went wrong. Please try again.");
