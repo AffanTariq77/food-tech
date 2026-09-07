@@ -68,8 +68,8 @@ const NewsletterPopup = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-[60] sm:right-auto sm:bottom-6 sm:left-6" role="dialog" aria-label="Newsletter signup">
-      <div className="ab-panel relative mx-auto w-full max-w-sm p-5">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center px-4" role="dialog" aria-label="Newsletter signup">
+      <div className="ab-panel relative w-full max-w-sm p-5">
         <button
           type="button"
           onClick={dismiss}

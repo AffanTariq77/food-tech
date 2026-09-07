@@ -1,23 +1,20 @@
-import etnioLogo from "@/assets/clients/etnio-logo.png";
 import fanfoodLogo from "@/assets/clients/fanfood-logo.png";
-import devblockLogo from "@/assets/clients/devblock-logo.png";
-import raffLogo from "@/assets/clients/raff-logo.png";
+import localLogo from "@/assets/uselocal_logo.jpeg";
 
 const ClientMarquee = () => {
-  const clients = [
-    { name: "Etnio", logo: etnioLogo },
+   const clients = [
     { name: "FanFood", logo: fanfoodLogo },
-    { name: "DevBlock", logo: devblockLogo },
-    { name: "Raff", logo: raffLogo },
+    { name: "Local", logo: localLogo },
   ];
 
-  // Repeat the array enough times for a seamless loop
-  const marqueeClients = [...clients, ...clients];
+  // Only 2 logos, so repeat the set enough times to fill wide screens, then duplicate once more for a seamless loop
+  const repeated = Array(8).fill(clients).flat();
+  const marqueeClients = [...repeated, ...repeated];
 
   return (
-    <div className="relative overflow-hidden py-8 w-screen max-w-none left-1/2 right-1/2 -translate-x-1/2">
+    <div className="relative overflow-hidden py-5 xs:py-6 sm:py-8 w-screen max-w-none left-1/2 right-1/2 -translate-x-1/2 px-3 xs:px-4">
       <div
-        className="flex gap-12 min-w-full animate-marquee-loop"
+        className="flex gap-6 xs:gap-8 sm:gap-12 min-w-full animate-marquee-loop"
         style={{
           animationDuration: "32s",
           animationTimingFunction: "linear",
@@ -27,12 +24,12 @@ const ClientMarquee = () => {
         {marqueeClients.map((client, index) => (
           <div
             key={index}
-            className="flex-shrink-0 flex items-center justify-center px-6 md:px-10 lg:px-14"
+            className="flex-shrink-0 flex items-center justify-center px-3 xs:px-4 sm:px-6 md:px-10 lg:px-14"
           >
             <img
               src={client.logo}
               alt={client.name}
-              className="h-12 w-auto object-contain mx-auto"
+              className="h-10 xs:h-12 sm:h-14 w-auto object-contain rounded-xl mx-auto"
               draggable={false}
             />
           </div>

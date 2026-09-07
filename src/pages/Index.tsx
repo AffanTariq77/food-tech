@@ -6,6 +6,7 @@ import TechMarquee from "@/components/foodtech/TechMarquee";
 import WhatWeDoSection from "@/components/foodtech/WhatWeDoSection";
 
 // Below-the-fold sections are split out of the initial bundle
+const ClientMarquee = lazy(() => import("@/components/ClientMarquee"));
 const MathSection = lazy(() => import("@/components/foodtech/MathSection"));
 const FourGapsSection = lazy(() => import("@/components/foodtech/FourGapsSection"));
 const WhatWeBuildSection = lazy(() => import("@/components/foodtech/WhatWeBuildSection"));
@@ -59,11 +60,16 @@ const Index = () => (
 
       <SectionBoundary fallback={<SectionFallback />}>
         <FAQSection />
+      </SectionBoundary>    
+        
+       <SectionBoundary fallback={<SectionFallback />}>
+        <ClientMarquee />
       </SectionBoundary>
 
       <SectionBoundary fallback={<SectionFallback />}>
         <ContactSection />
       </SectionBoundary>
+
     </main>
 
     <SectionBoundary fallback={<SectionFallback />}>
