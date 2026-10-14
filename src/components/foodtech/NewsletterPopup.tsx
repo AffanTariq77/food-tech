@@ -51,7 +51,7 @@ const NewsletterPopup = () => {
     }
     setStatus("loading");
     try {
-      await submitForm({ platform: "AirBridge-Newsletter", full_name: form.name, work_email: form.email });
+      await submitForm({ platform: "Food-Tech-Newsletter", full_name: form.name, work_email: form.email });
       setStatus("success");
     } catch (submissionError) {
       setStatus("idle");

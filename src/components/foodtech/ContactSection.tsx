@@ -89,7 +89,7 @@ const ContactSection = () => {
     setStatus("loading");
     try {
       await submitForm({
-        platform: "AirBridge-QuoteRequest",
+        platform: "Food-Tech-QuoteRequest",
         full_name: form.name,
         work_email: form.email,
         company_name: form.restaurantName,
