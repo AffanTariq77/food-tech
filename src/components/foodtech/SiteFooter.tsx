@@ -2,7 +2,6 @@ import logo from "@/assets/airbridge-logo.png";
 import { scrollToSection } from "@/lib/scroll";
 
 const siteLinks = [
-  { label: "AirBridge Devs", url: "https://airbridgedevs.com" },
   { label: "AI Strategy & Consulting", url: "https://strategy.airbridgedevs.com" },
   { label: "AI Integration & Deployment", url: "https://integrate.airbridgedevs.com" },
   { label: "Generative AI Solutions", url: "https://genai.airbridgedevs.com" },
@@ -13,8 +12,6 @@ const siteLinks = [
   { label: "LLM Cost Optimization", url: "https://airbridgedevs.co" },
   { label: "Food Tech", url: "https://food-tech.airbridgedevs.com" },
   { label: "Prompt to Product", url: "https://mvp.airbridgedevs.com" },
-  { label: "Privacy", url: "/privacy" },
-  { label: "Terms and Conditions", url: "https://airbridgedevs.com/terms" },
 ];
 
 const columns = [
@@ -85,18 +82,29 @@ const SiteFooter = () => (
             </nav>
           ))}
         </div>
+
+      <nav aria-label="Specialised Services" className="mt-12 border-t pt-10 ab-hairline">
+        <p className="ab-label">Specialised Services</p>
+        <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {siteLinks.map((link) => (
+            <li key={link.url}>
+              <a href={link.url} className="text-sm text-muted-foreground transition-colors duration-200 hover:text-accent">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
       </div>
     </div>
 
     <div className="border-t ab-hairline">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">© 2026 AirBridge Devs</p>
-        <nav aria-label="AirBridge Devs sites" className="flex flex-wrap gap-x-4 gap-y-2">
-          {siteLinks.map((link) => (
-            <a key={link.url} href={link.url} className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-200 hover:text-accent">
-              {link.label}
-            </a>
-          ))}
+        <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+          <a href="https://airbridgedevs.com" className="transition-colors duration-200 hover:text-accent">AirBridge Devs</a>
+          <a href="/privacy" className="transition-colors duration-200 hover:text-accent">Privacy</a>
+          <a href="https://airbridgedevs.com/terms" className="transition-colors duration-200 hover:text-accent">Terms and Conditions</a>
         </nav>
       </div>
     </div>
