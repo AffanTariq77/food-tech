@@ -1,19 +1,6 @@
 import logo from "@/assets/airbridge-logo.png";
 import { scrollToSection } from "@/lib/scroll";
 
-const siteLinks = [
-  { label: "AI Strategy & Consulting", url: "https://strategy.airbridgedevs.com" },
-  { label: "AI Integration & Deployment", url: "https://integrate.airbridgedevs.com" },
-  { label: "Generative AI Solutions", url: "https://genai.airbridgedevs.com" },
-  { label: "AI-Powered Automation", url: "https://automate.airbridgedevs.com" },
-  { label: "AI Analytics Dashboards", url: "https://data.airbridgedevs.com" },
-  { label: "Custom Software Development", url: "https://build.airbridgedevs.com" },
-  { label: "AI-Centric Software Development", url: "https://ai.airbridgedevs.com" },
-  { label: "LLM Cost Optimization", url: "https://airbridgedevs.co" },
-  { label: "Food Tech", url: "https://food-tech.airbridgedevs.com" },
-  { label: "Prompt to Product", url: "https://mvp.airbridgedevs.com" },
-];
-
 const columns = [
   {
     title: "Navigate",
@@ -82,19 +69,6 @@ const SiteFooter = () => (
             </nav>
           ))}
         </div>
-
-      <nav aria-label="Specialised Services" className="mt-12 border-t pt-10 ab-hairline">
-        <p className="ab-label">Specialised Services</p>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {siteLinks.map((link) => (
-            <li key={link.url}>
-              <a href={link.url} className="text-sm text-muted-foreground transition-colors duration-200 hover:text-accent">
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
       </div>
     </div>
 
