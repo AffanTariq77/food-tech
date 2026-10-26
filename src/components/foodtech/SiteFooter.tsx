@@ -1,6 +1,22 @@
 import logo from "@/assets/airbridge-logo.png";
 import { scrollToSection } from "@/lib/scroll";
 
+const siteLinks = [
+  { label: "AirBridge Devs", url: "https://airbridgedevs.com" },
+  { label: "AI Strategy & Consulting", url: "https://strategy.airbridgedevs.com" },
+  { label: "AI Integration & Deployment", url: "https://integrate.airbridgedevs.com" },
+  { label: "Generative AI Solutions", url: "https://genai.airbridgedevs.com" },
+  { label: "AI-Powered Automation", url: "https://automate.airbridgedevs.com" },
+  { label: "AI Analytics Dashboards", url: "https://data.airbridgedevs.com" },
+  { label: "Custom Software Development", url: "https://build.airbridgedevs.com" },
+  { label: "AI-Centric Software Development", url: "https://ai.airbridgedevs.com" },
+  { label: "LLM Cost Optimization", url: "https://airbridgedevs.co" },
+  { label: "Food Tech", url: "https://food-tech.airbridgedevs.com" },
+  { label: "Prompt to Product", url: "https://mvp.airbridgedevs.com" },
+  { label: "Privacy", url: "/privacy" },
+  { label: "Terms and Conditions", url: "https://airbridgedevs.com/terms" },
+];
+
 const columns = [
   {
     title: "Navigate",
@@ -75,7 +91,13 @@ const SiteFooter = () => (
     <div className="border-t ab-hairline">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">© 2026 AirBridge Devs</p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Contact · Privacy · Terms · Unsubscribe</p>
+        <nav aria-label="AirBridge Devs sites" className="flex flex-wrap gap-x-4 gap-y-2">
+          {siteLinks.map((link) => (
+            <a key={link.url} href={link.url} className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-200 hover:text-accent">
+              {link.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </div>
   </footer>
