@@ -1,22 +1,38 @@
-// Follow this setup guide to integrate the Deno language server with your editor:
-// https://deno.land/manual/getting_started/setup_your_environment
-// This enables autocomplete, go to definition, etc.
-
-// Setup type definitions for built-in Supabase Runtime APIs
+// Shared lead-notification function for every AirBridge site.
+// Secrets: RESEND_API_KEY, NOTIFY_EMAIL (lead inbox), RESEND_FROM_EMAIL (sender on a Resend-verified domain).
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, apikey, x-client-info",
 }
+
+const json = (status: number, payload: unknown) =>
+  new Response(JSON.stringify(payload), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } })
 
 const escapeHtml = (value: string) =>
   value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char] as string))
 
 const row = (label: string, value: string, shaded: boolean) =>
-  `<tr style="background:${shaded ? "#f1f5f9" : "#fff"};"><td style="padding:10px 16px;font-weight:bold;vertical-align:top;white-space:nowrap;">${escapeHtml(label)}</td><td style="padding:10px 16px;white-space:pre-line;">${value}</td></tr>`
+  `<tr style="background:${shaded ? "#f1f5f9" : "#fff"};"><td style="padding:10px 16px;font-weight:bold;vertical-align:top;white-space:nowrap;">${escapeHtml(label)}</td><td style="padding:10px 16px;white-space:pre-line;">${escapeHtml(value)}</td></tr>`
+
+const isEmail = (value: unknown): value is string => typeof value === "string" && /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(value)
+
+// The main site and landing pages post flat fields; food-tech posts { kind, subject, fields }
+// deno-lint-ignore no-explicit-any
+const flatFields = (b: any): Record<string, unknown> => ({
+  Platform: b.platform,
+  Name: b.name || [b.firstName, b.lastName].filter(Boolean).join(" "),
+  Email: b.email,
+  Company: b.company,
+  Subject: b.subject,
+  Message: b.message,
+  Details: b.details,
+  "LLM Provider": b.llmProvider,
+  "Monthly Spend": b.monthlySpend,
+})
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -25,40 +41,31 @@ serve(async (req) => {
 
   try {
     const body = await req.json()
-    // `kind` selects the email template. `notifyBusiness` (default) sends the
-    // internal lead notification; `ackVisitor` sends the visitor's confirmation.
-    const { kind = "notifyBusiness", subject, to, replyTo, fields } = body as {
-      kind?: "notifyBusiness" | "ackVisitor"
-      subject: string
-      to?: string
-      replyTo?: string
-      fields: Record<string, string | undefined>
-    }
-
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
-    // Configurable so the receiving address can change without a code deploy.
     const NOTIFY_EMAIL = Deno.env.get("NOTIFY_EMAIL")
-    // Must be a domain verified in Resend before this will deliver in production.
-    const FROM_EMAIL = Deno.env.get("RESEND_FROM_EMAIL") ?? "onboarding@resend.dev"
-
-    if (!RESEND_API_KEY) {
-      return new Response(JSON.stringify({ error: "RESEND_API_KEY is not configured" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      })
+    const FROM_EMAIL = Deno.env.get("RESEND_FROM_EMAIL")
+    if (!RESEND_API_KEY || !NOTIFY_EMAIL || !FROM_EMAIL) {
+      return json(500, { error: "RESEND_API_KEY, NOTIFY_EMAIL and RESEND_FROM_EMAIL must be set" })
     }
 
-    const recipient = kind === "ackVisitor" ? to : to ?? NOTIFY_EMAIL
-    if (!recipient) {
-      return new Response(JSON.stringify({ error: "No recipient configured (set NOTIFY_EMAIL or pass `to`)" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      })
+    let to: string, subject: string, fields: Record<string, unknown>, replyTo: unknown
+    if (body.kind === "ackVisitor") {
+      // Fixed wording, so the public anon key can't be used to send arbitrary email to arbitrary people
+      if (!isEmail(body.to)) return json(400, { error: "Invalid recipient" })
+      to = body.to
+      subject = "We've got your quote request"
+      fields = { Message: "Thanks, we received your quote request. We reply the same working day." }
+      replyTo = NOTIFY_EMAIL
+    } else {
+      to = NOTIFY_EMAIL
+      subject = body.fields ? String(body.subject ?? "New enquiry") : `New Form Submission from ${body.platform ?? "website"}`
+      fields = body.fields ?? flatFields(body)
+      replyTo = body.replyTo ?? body.email
     }
 
-    const rowsHtml = Object.entries(fields ?? {})
-      .filter(([, value]) => value !== undefined && value !== "")
-      .map(([label, value], i) => row(label, escapeHtml(String(value)), i % 2 === 0))
+    const rowsHtml = Object.entries(fields)
+      .filter(([, value]) => value !== undefined && value !== null && value !== "")
+      .map(([label, value], i) => row(label, String(value), i % 2 === 0))
       .join("")
 
     const html = `
@@ -72,42 +79,22 @@ serve(async (req) => {
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: FROM_EMAIL,
-        to: recipient,
-        ...(replyTo ? { reply_to: replyTo } : {}),
-        subject,
+        to,
+        ...(isEmail(replyTo) ? { reply_to: replyTo } : {}),
+        subject: subject.replace(/[\r\n]+/g, " ").slice(0, 200),
         html,
       }),
     })
 
     if (!resendResponse.ok) {
       const errorText = await resendResponse.text()
-      return new Response(JSON.stringify({ error: `Resend error: ${errorText}` }), {
-        status: 502,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      })
+      console.error("Resend error:", resendResponse.status, errorText)
+      return json(502, { error: `Resend error: ${errorText}` })
     }
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    })
+    return json(200, { success: true })
   } catch (error) {
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    })
+    console.error("send-notification failed:", error)
+    return json(500, { error: error instanceof Error ? error.message : "Unknown error" })
   }
 })
-
-/* To invoke locally:
-
-  1. Run `supabase start` (see: https://supabase.com/docs/reference/cli/supabase-start)
-  2. Set secrets: `supabase secrets set RESEND_API_KEY=... NOTIFY_EMAIL=you@yourdomain.com RESEND_FROM_EMAIL=notifications@yourdomain.com`
-  3. Make an HTTP request:
-
-  curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/send-notification' \
-    --header 'Authorization: Bearer <anon key>' \
-    --header 'Content-Type: application/json' \
-    --data '{"subject":"Test","fields":{"Name":"Jamie"}}'
-
-*/
